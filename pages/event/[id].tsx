@@ -13,6 +13,7 @@ const Event = ({
   gaArea,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // useStates
+  //   NOTE TO FUTURE: Probably use a state management library to prevent prop drilling with the seat states
   const [seats, setSeats] = useState<string[]>([""]);
   const [seatsAvailable, setSeatsAvailable] = useState([""]);
   const [seatsNotAvailable, setSeatsNotAvailable] = useState([""]);
@@ -21,11 +22,9 @@ const Event = ({
   const getGaArea = gaArea;
   const bookingLimit = event.bookingLimit;
 
-  console.log("booking", bookingLimit);
-  console.log("ga area", getGaArea);
-
-  //   TO DO
-  // 1. Display the name of the ga name
+  // TODO
+  // 1. Get the GaArea Data
+  // 2. Display the Areas and Price
   return (
     <div>
       Event
@@ -40,7 +39,11 @@ const Event = ({
           {/* Then loop through the price */}
           <div>
             {value.priceIds.map((priceId) => (
-              <TicketRow priceId={priceId} seatCapacity={value.capacity} />
+              // Get the minimum number based on the event booking limit and the ga's seat Capacity
+              <TicketRow
+                priceId={priceId}
+                seatCapacity={Math.min(value.capacity, event.bookingLimit)}
+              />
             ))}
           </div>
         </div>

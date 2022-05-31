@@ -3,35 +3,35 @@ import { getAPrice } from "../pages/api/getTicketData";
 import { TicketTypes } from "../utils/types";
 
 interface TicketRowProps {
-  // it would get price ids
-  //   get the maximum capacity
-  //   price name
-  // price age
   priceId: number;
   seatCapacity: number;
 }
 
 const TicketRow: React.FC<TicketRowProps> = ({ priceId, seatCapacity }) => {
-  // Fetch the the price based on the id
-
-  const [getPrice, setGetPrice] = useState<TicketTypes>();
+  const [getPriceData, setGetPriceData] = useState<TicketTypes>();
 
   useEffect(() => {
+    // Fetch the the price based on the id
+
     async function fetchTicket() {
       let response = await getAPrice(priceId);
-      setGetPrice(response);
+      setGetPriceData(response);
     }
 
     fetchTicket();
   }, []);
 
-  console.log("price ", getPrice);
-
   return (
-    <div>
-      TicketRow
-      <div className="grid grid-col-10 gap-4">
-        <p>{getPrice?.price}</p>
+    <div className="grid grid-col-10 gap-4">
+      {getPriceData?.priceName}
+      <div>
+        {/* Loop through the ticket row using the seating capacity */}
+        {[...Array(seatCapacity)].map((seat, index) => (
+          // TODO
+          // 1. Take into account of more than 10 items in a row
+          //      -> Ex. if there 4000, there will be 400 rows
+          <p key={index}>${getPriceData?.price}</p>
+        ))}
       </div>
     </div>
   );
