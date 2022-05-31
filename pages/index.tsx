@@ -4,7 +4,9 @@ import Image from "next/image";
 import { getAllEvents } from "./api/getTicketData";
 import Link from "next/link";
 import { EventTypes } from "../utils/types";
-const Home = ({ events }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = ({
+  eventsData,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -14,7 +16,7 @@ const Home = ({ events }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         {/* Display the list of events here */}
-        {events.map((event, index) => (
+        {eventsData.map((event, index) => (
           <p
             key={index}
             className="mb-8 mt-8 cursor-pointer text-center text-xl font-semibold transition duration-700 hover:text-pink-600"
@@ -43,8 +45,8 @@ export default Home;
 
 // fetch data using getStaticProps in Nextjs;
 export async function getStaticProps() {
-  const events: EventTypes[] = await getAllEvents();
+  const eventsData: EventTypes[] = await getAllEvents();
   return {
-    props: { events },
+    props: { eventsData },
   };
 }

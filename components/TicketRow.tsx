@@ -24,12 +24,10 @@ const TicketRow: React.FC<TicketRowProps> = ({ priceId, seatCapacity }) => {
   return (
     <div className="grid grid-col-10 gap-4">
       {getPriceData?.priceName}
+      {/* Loop through the ticket row using the seating capacity */}
       <div>
-        {/* Loop through the ticket row using the seating capacity */}
-        {[...Array(seatCapacity)].map((seat, index) => (
-          // TODO
-          // 1. Take into account of more than 10 items in a row
-          //      -> Ex. if there 4000, there will be 400 rows
+        {[...Array(seatCapacity)].map((_, index) => (
+          // Display it now as a row instead of column
           <p key={index}>${getPriceData?.price}</p>
         ))}
       </div>
