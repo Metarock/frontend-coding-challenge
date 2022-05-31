@@ -41,3 +41,9 @@ export const getAllPricesType = async () => {
 
   return getPricesResponse.data;
 };
+
+export const getAPrice = async (id: number) => {
+  const aPriceResponse = await axios.get(ITICKET_BASEURL + `prices/${id}`);
+
+  return aPriceResponse.data;
+};
